@@ -61,6 +61,7 @@ class Yolov8Node(LifecycleNode):
 
         self.get_logger().info('Yolov8Node created')
 
+
     def on_configure(self, state: LifecycleState) -> TransitionCallbackReturn:
         self.get_logger().info(f'Configuring {self.get_name()}')
 

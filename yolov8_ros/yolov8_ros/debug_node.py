@@ -55,6 +55,10 @@ class DebugNode(LifecycleNode):
         # params
         self.declare_parameter("image_reliability",
                                QoSReliabilityPolicy.BEST_EFFORT)
+        
+        # Qui dichiaro il prametro da rimappare
+        self.declare_parameter("debug_image_topic", "dbg_image")
+
 
         self.get_logger().info("Debug node created")
 
@@ -69,8 +73,11 @@ class DebugNode(LifecycleNode):
             depth=1
         )
 
+        # Aggiunto questa linea per rimappare
+        self.debug_image_topic = self.get_parameter("debug_image_topic").get_parameter_value().string_value
+
         # pubs
-        self._dbg_pub = self.create_publisher(Image, "dbg_image", 10)
+        self._dbg_pub = self.create_publisher(Image, self.debug_image_topic, 10) # qui ho cambiato il nome del topic
         self._bb_markers_pub = self.create_publisher(
             MarkerArray, "dgb_bb_markers", 10)
         self._kp_markers_pub = self.create_publisher(
